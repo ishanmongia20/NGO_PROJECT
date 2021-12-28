@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 from django.contrib.messages import constants as messages
+import os
+
 
 import dj_database_url
 import django_heroku
@@ -29,7 +31,7 @@ SECRET_KEY = 'django-insecure-w(!s+e9vnw=a@6cfaf#%wm1^-@jqlx4zo&p^vdoank-9q(z*bo
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["ngoansrsite.herokuapp.com"]
+ALLOWED_HOSTS = ["*"]
 
 
 
@@ -127,16 +129,22 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 # ADD MANUALLY
+
+PROJECT_ROOT= os.path.dirname(os.path.abspath(__file__))
+
+STATIC_ROOT = os.path.join(PROJECT_ROOT,'staticfiles')
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static"
 ]
-STATIC_ROOT = 'staticfiles'
-STATIC_URL = '/static/'
-
 # STATICFILES_STORAGE='whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
+
+DATABASES['default']=dj_database_url.config()
+SECURE_PROXY_SSL_HEADER =('HTTP_X_FORWARDED_PROTO','https')
+
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
