@@ -22,7 +22,7 @@ def index(request):
         submit.save()
         messages.success(request, 'Profile details updated.')
 
-    return render(request,'mysite/index.html')
+    return render(request,'mysite/Index.html')
 
 
 
