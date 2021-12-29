@@ -22,7 +22,7 @@ def index(request):
         submit.save()
         messages.success(request, 'Profile details updated.')
 
-    return render(request,'index.html')
+    return render(request,'mysite/index.html')
 
 
 
@@ -38,9 +38,9 @@ def donate(request):
         # print(payment)
         fill=Donate(name=name,email=email,phone=phone,money=money,payment=payment['id'],date=datetime.today())
         fill.save()
-        return render(request, 'don.html',{'payment':payment})
+        return render(request, 'mysite/don.html',{'payment':payment})
 
-    return render(request,'don.html')
+    return render(request,'mysite/don.html')
 
 @csrf_exempt
 def success(request):
@@ -60,8 +60,8 @@ def success(request):
         user=Donate.objects.filter(payment=order_id).first()
         user.paid=True
         user.save()
-        msg_plain = render_to_string('email.txt')
-        msg_html= render_to_string('email.html')
+        msg_plain = render_to_string('mysite/email.txt')
+        msg_html= render_to_string('mysite/email.html')
         send_mail("your donation has been recieved",msg_plain,settings.EMAIL_HOST_USER,
                   [f'{user.email}'] , html_message = msg_html )
-    return render(request,'success.html')
+    return render(request,'mysite/success.html')
